@@ -186,6 +186,14 @@
             font-weight: 500;
             border: 1px solid rgba(255, 255, 255, 0.2);
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-display:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .projects-grid {
@@ -193,6 +201,21 @@
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
             margin-bottom: 40px;
+            min-height: 200px;
+        }
+
+        .no-projects {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            padding: 60px 20px;
+        }
+
+        .no-projects h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .project-card {
@@ -249,52 +272,35 @@
         }
 
         .nav-icon {
-            width: 24px;
-            height: 24px;
-            background: #666;
-            border: none;
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: 2px solid #e0e0e0;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 12px;
             transition: all 0.3s ease;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .nav-icon:hover {
             background: #4a6cf7;
-            transform: translateY(-1px);
+            border-color: #4a6cf7;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 108, 247, 0.3);
         }
 
-        .nav-icon.plus::before {
-            content: '+';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
+        .nav-icon img {
+            width: 20px;
+            height: 20px;
+            transition: filter 0.3s ease;
         }
 
-        .nav-icon.search::before {
-            content: '🔍';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 14px;
-        }
-
-        .nav-icon.message::before {
-            content: '💬';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 14px;
-        }
-
-        .nav-icon.message {
-            background: #4a6cf7;
+        .nav-icon:hover img {
+            filter: brightness(0) invert(1);
         }
 
         .form-card {
@@ -373,6 +379,83 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
+        /* Beta Notice Styles */
+        .beta-notice {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            z-index: 1000;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .beta-notice.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .beta-notice h3 {
+            color: #ff6b35;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .beta-notice p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .beta-continue-btn {
+            background: #4a6cf7;
+            color: white;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(74, 108, 247, 0.3);
+        }
+
+        .beta-continue-btn:hover {
+            background: #3b5cf4;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 108, 247, 0.4);
+        }
+
+        .beta-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .beta-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
         /* Floating particles animation */
         .particles {
             position: absolute;
@@ -424,7 +507,6 @@
             animation-duration: 9s;
         }
 
-        /* Animation Classes - Remove old ones */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -449,6 +531,13 @@
             }
             100% {
                 top: -10%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(2);
                 opacity: 0;
             }
         }
@@ -574,32 +663,143 @@
     <div class="dashboard" id="dashboard">
         <div class="dashboard-header">
             <h1 class="featured-title">Featured</h1>
-            <div class="user-display" id="userDisplay">User Name</div>
+            <div class="user-display" id="userDisplay" onclick="handleLogout()">User Name</div>
         </div>
         
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-name">Project Name</div>
-            </div>
-            <div class="project-card">
-                <div class="project-name">Project Name</div>
-            </div>
-            <div class="project-card">
-                <div class="project-name">Project Name</div>
-            </div>
-            <div class="project-card">
-                <div class="project-name">Project Name</div>
-            </div>
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Projects will be loaded dynamically -->
         </div>
         
         <div class="bottom-nav">
-            <button class="nav-icon plus" title="Add Project"></button>
-            <button class="nav-icon search" title="Search"></button>
-            <button class="nav-icon message" title="Messages"></button>
+            <button class="nav-icon" title="Add Project">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 4.5v15m7.5-7.5h-15" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button class="nav-icon" title="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <circle cx="11" cy="11" r="8" stroke="#666" stroke-width="2"/>
+                    <path d="m21 21-4.35-4.35" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button class="nav-icon" title="Messages">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
         </div>
     </div>
 
+    <!-- Beta Notice -->
+    <div class="beta-overlay" id="betaOverlay"></div>
+    <div class="beta-notice" id="betaNotice">
+        <h3>This website is in beta</h3>
+        <p>You don't have access to most features.</p>
+        <button class="beta-continue-btn" onclick="closeBetaNotice()">Continue anyway</button>
+    </div>
+
     <script>
+        // Beta Notice Functions
+        function showBetaNotice() {
+            const betaOverlay = document.getElementById('betaOverlay');
+            const betaNotice = document.getElementById('betaNotice');
+            
+            betaOverlay.classList.add('show');
+            setTimeout(() => {
+                betaNotice.classList.add('show');
+            }, 100);
+        }
+
+        function closeBetaNotice() {
+            const betaOverlay = document.getElementById('betaOverlay');
+            const betaNotice = document.getElementById('betaNotice');
+            
+            betaNotice.classList.remove('show');
+            setTimeout(() => {
+                betaOverlay.classList.remove('show');
+            }, 300);
+        }
+
+        // Save System Functions
+        function saveUserData(name) {
+            const userData = {
+                name: name,
+                projects: [],
+                lastLogin: new Date().toISOString()
+            };
+            localStorage.setItem('betterScratchUser', JSON.stringify(userData));
+        }
+
+        function loadUserData() {
+            const saved = localStorage.getItem('betterScratchUser');
+            return saved ? JSON.parse(saved) : null;
+        }
+
+        function updateUserData(updates) {
+            const userData = loadUserData();
+            if (userData) {
+                Object.assign(userData, updates);
+                localStorage.setItem('betterScratchUser', JSON.stringify(userData));
+            }
+        }
+
+        function clearUserData() {
+            localStorage.removeItem('betterScratchUser');
+        }
+
+        function loadProjects() {
+            const projectsGrid = document.getElementById('projectsGrid');
+            
+            projectsGrid.innerHTML = `
+                <div class="no-projects">
+                    <h3>No projects yet</h3>
+                    <p>Start creating something amazing!</p>
+                </div>
+            `;
+        }
+
+        // Initialize app on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedUser = loadUserData();
+            
+            if (savedUser) {
+                // User exists, skip to dashboard
+                const mainContainer = document.getElementById('mainContainer');
+                const nameForm = document.getElementById('nameForm');
+                const dashboard = document.getElementById('dashboard');
+                const userDisplay = document.getElementById('userDisplay');
+                
+                // Hide initial screens and show dashboard
+                mainContainer.style.display = 'none';
+                nameForm.style.display = 'none';
+                dashboard.classList.add('active');
+                
+                // Update user display
+                userDisplay.textContent = savedUser.name;
+                
+                // Load projects
+                loadProjects();
+                
+                // Show beta notice after a short delay
+                setTimeout(() => {
+                    showBetaNotice();
+                }, 500);
+            }
+            
+            // Handle Enter key press in name input
+            document.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const nameForm = document.getElementById('nameForm');
+                    const nameInput = document.querySelector('.name-input');
+                    
+                    // If name form is visible and input is focused
+                    if (nameForm.classList.contains('active') && document.activeElement === nameInput) {
+                        handleNameSubmit();
+                    }
+                }
+            });
+        });
+
         function handleContinue() {
             // Add a ripple effect
             const btn = event.target;
@@ -655,6 +855,9 @@
             // Reset input styling
             nameInput.style.boxShadow = '';
             
+            // Save user data
+            saveUserData(name);
+            
             // Add ripple effect to button
             const btn = event.target;
             const ripple = document.createElement('div');
@@ -691,35 +894,49 @@
                 // Start the slide transition
                 nameForm.classList.remove('active');
                 dashboard.classList.add('active');
+                
+                // Load projects
+                loadProjects();
+                
+                // Show beta notice after a short delay
+                setTimeout(() => {
+                    showBetaNotice();
+                }, 500);
             }, 200);
         }
 
-        // Handle Enter key press in name input
-        document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    const nameForm = document.getElementById('nameForm');
-                    const nameInput = document.querySelector('.name-input');
-                    
-                    // If name form is visible and input is focused
-                    if (nameForm.classList.contains('active') && document.activeElement === nameInput) {
-                        handleNameSubmit();
-                    }
-                }
-            });
-        });
-
-        // Add ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(2);
-                    opacity: 0;
-                }
+        function handleLogout() {
+            const confirmed = confirm("Are you sure you want to log out?");
+            if (confirmed) {
+                // Clear user data
+                clearUserData();
+                
+                // Reset the interface
+                const mainContainer = document.getElementById('mainContainer');
+                const nameForm = document.getElementById('nameForm');
+                const dashboard = document.getElementById('dashboard');
+                const nameInput = document.querySelector('.name-input');
+                
+                // Hide dashboard and beta notice
+                dashboard.classList.remove('active');
+                closeBetaNotice();
+                
+                // Reset forms and show main container properly
+                nameForm.classList.remove('active');
+                mainContainer.classList.remove('slide-out');
+                mainContainer.style.display = 'flex';
+                nameForm.style.display = 'flex';
+                
+                // Clear name input
+                nameInput.value = '';
+                
+                // Reset main container position and visibility
+                setTimeout(() => {
+                    mainContainer.style.opacity = '1';
+                    mainContainer.style.transform = 'translateY(0)';
+                }, 100);
             }
-        `;
-        document.head.appendChild(style);
+        }
     </script>
 </body>
 </html>
